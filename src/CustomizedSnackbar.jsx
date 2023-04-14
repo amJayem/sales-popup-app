@@ -7,6 +7,7 @@ import axios from 'axios'
 
 export default function CustomizedSnackbar() {
   const [open, setOpen] = React.useState(false)
+  const [popUpInfo, setPopUpInfo] = React.useState(null)
 
   const handleOpen = () => {
     setOpen(true)
@@ -43,13 +44,19 @@ export default function CustomizedSnackbar() {
     return document.domain
   }
 
-  console.log(getShopDomain())
+  // console.log(getShopDomain())
+  const server = 'https://salespopup-server-772o8g9aj-amjayem.vercel.app'
 
-  axios(`http://localhost:5000/get-data?shop=${getShopDomain()}`)
-    .then((data) => {
-      console.log(data.data[0])
-    })
-    .catch((e) => console.error(e.message))
+  if (!popUpInfo) {
+    axios(`${server}/get-data?shop=${getShopDomain()}`)
+      .then((data) => {
+        setPopUpInfo(data.data[0])
+        // console.log(data.data[0])
+      })
+      .catch((e) => console.error(e.message))
+  }
+
+  // console.log(popUpInfo)
 
   return (
     <Stack spacing={2} sx={{ width: '100%' }}>
@@ -70,17 +77,16 @@ export default function CustomizedSnackbar() {
           </Box>
           <Box color={'white'}>
             <Typography fontSize={18} fontWeight={'bold'}>
-              This product is sold
+              {popUpInfo?.title}
             </Typography>
-            <Typography>XYZ bought the product!</Typography>
+            <Typography>{popUpInfo?.subTitle}</Typography>
             <div>
-              {/* This could be a heading (eg. h2) depends on your use case. */}
               <Typography component='div' paddingY={2}>
                 <Link
                   sx={{
                     '&:hover': {
-                      color: 'yellow'
-                      // backgroundColor: 'red'
+                      color: 'yellow',
+                      backgroundColor: 'red'
                     }
                   }}
                   href='#with-card'
