@@ -1,9 +1,9 @@
 import * as React from 'react'
 import Stack from '@mui/material/Stack'
 import Snackbar from '@mui/material/Snackbar'
-import { image } from '../assets'
 import { Box } from '@mui/system'
 import { Link, Typography } from '@mui/material'
+import axios from 'axios'
 
 export default function CustomizedSnackbar() {
   const [open, setOpen] = React.useState(false)
@@ -21,10 +21,35 @@ export default function CustomizedSnackbar() {
       setTimeout(() => {
         handleClose()
       }, 2000)
-    }, 6000)
+    }, 10000)
 
     return () => clearInterval(interval)
   }, [])
+
+  const getShopDomain = () => {
+    if ('object' == typeof Shopify && Shopify.hasOwnProperty('shop')) {
+      return Shopify.shop
+    } else {
+      Array.from(document.getElementsByTagName('script')).forEach((element) => {
+        if (
+          element.hasAttribute('src') &&
+          element.src.includes('jayem') &&
+          element.src.includes('shop=')
+        ) {
+          return element.src.slice('shop=')[1]
+        }
+      })
+    }
+    return document.domain
+  }
+
+  console.log(getShopDomain())
+
+  axios(`http://localhost:5000/get-data?shop=${getShopDomain()}`)
+    .then((data) => {
+      console.log(data.data[0])
+    })
+    .catch((e) => console.error(e.message))
 
   return (
     <Stack spacing={2} sx={{ width: '100%' }}>
