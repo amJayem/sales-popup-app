@@ -52,7 +52,6 @@ export default function CustomizedSnackbar() {
     axios(`${server}/get-data?shop=${getShopDomain()}`)
       .then((data) => {
         setPopUpInfo(data.data[0])
-        // console.log(data.data[0])
       })
       .catch((e) => console.error(e.message))
   }
