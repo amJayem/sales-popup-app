@@ -24,8 +24,8 @@ export default function CustomizedSnackbar() {
       handleOpen()
       setTimeout(() => {
         handleClose()
-      }, 5000)
-    }, 10000)
+      }, 2000)
+    }, 5000)
 
     return () => clearInterval(interval)
   }, [])
@@ -55,6 +55,7 @@ export default function CustomizedSnackbar() {
       })
       .catch((e) => console.error(e.message))
   }
+  console.log(popUpInfo)
 
   useEffect(() => {
     if (popUpInfo) {
@@ -65,9 +66,13 @@ export default function CustomizedSnackbar() {
   }, [open])
 
   let img = ''
+  let textColor = ''
+  let bgColor = ''
 
   if (randomProduct?.image) {
     img = randomProduct?.image
+    textColor = randomProduct?.textColor
+    bgColor = randomProduct?.bgColor
   }
 
   return (
@@ -82,14 +87,17 @@ export default function CustomizedSnackbar() {
               justifyContent={'center'}
               gap={4}
               paddingX={2}
-              width={'auto'}
-              height={115}
+              height={150}
+              width={300}
               borderRadius={2}>
               <Box>
                 {img && <img width={80} height={80} src={img} alt='img' />}
               </Box>
               <Box>
-                <Typography color={popUpInfo?.textColor} fontWeight={'bold'}>
+                <Typography
+                  color={popUpInfo?.textColor}
+                  fontSize={25}
+                  fontWeight={'bold'}>
                   {randomProduct?.title}
                 </Typography>
                 <Typography color={popUpInfo?.textColor} fontSize={'15px'}>
