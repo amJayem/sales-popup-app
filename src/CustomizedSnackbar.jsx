@@ -86,15 +86,7 @@ export default function CustomizedSnackbar() {
               height={115}
               borderRadius={2}>
               <Box>
-                {img && (
-                  <img
-                    // width={80}
-                    height={80}
-                    style={{ objectFit: 'contain' }}
-                    src={img}
-                    alt='img'
-                  />
-                )}
+                {img && <img width={80} height={80} src={img} alt='img' />}
               </Box>
               <Box>
                 <Typography color={popUpInfo?.textColor} fontWeight={'bold'}>
