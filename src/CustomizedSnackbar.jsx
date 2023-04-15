@@ -64,47 +64,50 @@ export default function CustomizedSnackbar() {
     }
   }, [open])
 
-  let img
-  if (randomProduct) {
+  let img = ''
+
+  if (randomProduct?.image) {
     img = randomProduct?.image
   }
 
   return (
-    <Stack spacing={2} sx={{ width: '100%' }}>
-      <Snackbar open={open}>
-        {popUpInfo !== null && (
-          <Box
-            display={'flex'}
-            bgcolor={popUpInfo?.bgColor}
-            alignItems={'center'}
-            justifyContent={'center'}
-            gap={4}
-            paddingX={2}
-            width={'auto'}
-            height={115}
-            borderRadius={2}>
-            <Box>
-              {randomProduct?.image && (
-                <img
-                  // width={80}
-                  height={80}
-                  style={{ objectFit: 'contain' }}
-                  src={img}
-                  alt='img'
-                />
-              )}
+    <>
+      {img && (
+        <Stack spacing={2} sx={{ width: '100%' }}>
+          <Snackbar open={open}>
+            <Box
+              display={'flex'}
+              bgcolor={popUpInfo?.bgColor}
+              alignItems={'center'}
+              justifyContent={'center'}
+              gap={4}
+              paddingX={2}
+              width={'auto'}
+              height={115}
+              borderRadius={2}>
+              <Box>
+                {img && (
+                  <img
+                    // width={80}
+                    height={80}
+                    style={{ objectFit: 'contain' }}
+                    src={img}
+                    alt='img'
+                  />
+                )}
+              </Box>
+              <Box>
+                <Typography color={popUpInfo?.textColor} fontWeight={'bold'}>
+                  {randomProduct?.title}
+                </Typography>
+                <Typography color={popUpInfo?.textColor} fontSize={'15px'}>
+                  ${randomProduct?.price}
+                </Typography>
+              </Box>
             </Box>
-            <Box>
-              <Typography color={popUpInfo?.textColor} fontWeight={'bold'}>
-                {randomProduct?.title}
-              </Typography>
-              <Typography color={popUpInfo?.textColor} fontSize={'15px'}>
-                ${randomProduct?.price}
-              </Typography>
-            </Box>
-          </Box>
-        )}
-      </Snackbar>
-    </Stack>
+          </Snackbar>
+        </Stack>
+      )}
+    </>
   )
 }
