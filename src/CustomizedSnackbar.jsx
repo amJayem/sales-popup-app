@@ -2,12 +2,16 @@ import * as React from 'react'
 import Stack from '@mui/material/Stack'
 import Snackbar from '@mui/material/Snackbar'
 import { Box } from '@mui/system'
-import { Link, Typography } from '@mui/material'
+import { Typography } from '@mui/material'
 import axios from 'axios'
+import { useEffect } from 'react'
+import { useState } from 'react'
 
 export default function CustomizedSnackbar() {
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = React.useState(true)
   const [popUpInfo, setPopUpInfo] = React.useState(null)
+  const [randomProduct, setRandomProduct] = useState([])
+  console.log(typeof popUpInfo)
 
   const handleOpen = () => {
     setOpen(true)
@@ -21,7 +25,7 @@ export default function CustomizedSnackbar() {
       handleOpen()
       setTimeout(() => {
         handleClose()
-      }, 2000)
+      }, 5000)
     }, 10000)
 
     return () => clearInterval(interval)
@@ -46,7 +50,6 @@ export default function CustomizedSnackbar() {
 
   // console.log(getShopDomain())
   const server = 'https://salespopup-server-772o8g9aj-amjayem.vercel.app'
-
   if (!popUpInfo) {
     axios(`${server}/get-data?shop=${getShopDomain()}`)
       .then((data) => {
@@ -58,47 +61,58 @@ export default function CustomizedSnackbar() {
 
   // console.log(popUpInfo)
 
+  useEffect(() => {
+    if (popUpInfo) {
+      const products = popUpInfo?.product
+      // setInterval(() => {
+      const randomIndex = Math.floor(Math.random() * products?.length)
+      setRandomProduct(products[randomIndex])
+      // }, 10000)
+    }
+  }, [open])
+  console.log(randomProduct)
+  let img
+  if (randomProduct) {
+    img = randomProduct?.image
+    // console.log(img)
+  }
+
   return (
     <Stack spacing={2} sx={{ width: '100%' }}>
-      <Snackbar open={open} onClose={handleClose}>
-        <Box
-          bgcolor={'#1E2028'}
-          display={'flex'}
-          flexDirection='row'
-          gap={4}
-          padding={2}
-          borderRadius={2}
-          alignItems='center'>
-          <Box height={'50px'} width={'50px'} display={'flex'}>
-            <img
-              src='https://images.unsplash.com/photo-1661956602153-23384936a1d3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80'
-              alt=''
-            />
-          </Box>
-          <Box color={'white'}>
-            <Typography fontSize={18} fontWeight={'bold'}>
-              {popUpInfo?.title}
-            </Typography>
-            <Typography>{popUpInfo?.subTitle}</Typography>
-            <div>
-              <Typography component='div' paddingY={2}>
-                <Link
-                  sx={{
-                    '&:hover': {
-                      color: 'yellow',
-                      backgroundColor: 'red'
-                    }
-                  }}
-                  href='#with-card'
-                  underline='none'
-                  color='yellowgreen'
-                  fontWeight='md'>
-                  See Product
-                </Link>
+      <Snackbar open={open}>
+        {popUpInfo !== null && (
+          <Box
+            display={'flex'}
+            bgcolor={popUpInfo?.bgColor}
+            alignItems={'center'}
+            justifyContent={'center'}
+            gap={4}
+            paddingX={2}
+            width={'auto'}
+            height={115}
+            borderRadius={2}>
+            <Box>
+              {randomProduct?.image && (
+                <img
+                  // width={80}
+                  height={80}
+                  style={{ objectFit: 'contain' }}
+                  src={img}
+                  // src='https://cdn.shopify.com/s/files/1/0737/8888/3226/products/5a5639d6bdd2b38b27d904235571a7b0.jpg?v=1681201755'
+                  alt='img'
+                />
+              )}
+            </Box>
+            <Box>
+              <Typography color={popUpInfo?.textColor} fontWeight={'bold'}>
+                {randomProduct?.title}
               </Typography>
-            </div>
+              <Typography color={popUpInfo?.textColor} fontSize={'15px'}>
+                ${randomProduct?.price}
+              </Typography>
+            </Box>
           </Box>
-        </Box>
+        )}
       </Snackbar>
     </Stack>
   )
