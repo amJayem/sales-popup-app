@@ -11,7 +11,6 @@ export default function CustomizedSnackbar() {
   const [open, setOpen] = React.useState(true)
   const [popUpInfo, setPopUpInfo] = React.useState(null)
   const [randomProduct, setRandomProduct] = useState([])
-  console.log(typeof popUpInfo)
 
   const handleOpen = () => {
     setOpen(true)
@@ -48,7 +47,6 @@ export default function CustomizedSnackbar() {
     return document.domain
   }
 
-  // console.log(getShopDomain())
   const server = 'https://salespopup-server-772o8g9aj-amjayem.vercel.app'
   if (!popUpInfo) {
     axios(`${server}/get-data?shop=${getShopDomain()}`)
@@ -59,22 +57,17 @@ export default function CustomizedSnackbar() {
       .catch((e) => console.error(e.message))
   }
 
-  // console.log(popUpInfo)
-
   useEffect(() => {
     if (popUpInfo) {
       const products = popUpInfo?.product
-      // setInterval(() => {
       const randomIndex = Math.floor(Math.random() * products?.length)
       setRandomProduct(products[randomIndex])
-      // }, 10000)
     }
   }, [open])
-  console.log(randomProduct)
+
   let img
   if (randomProduct) {
     img = randomProduct?.image
-    // console.log(img)
   }
 
   return (
@@ -98,7 +91,6 @@ export default function CustomizedSnackbar() {
                   height={80}
                   style={{ objectFit: 'contain' }}
                   src={img}
-                  // src='https://cdn.shopify.com/s/files/1/0737/8888/3226/products/5a5639d6bdd2b38b27d904235571a7b0.jpg?v=1681201755'
                   alt='img'
                 />
               )}
