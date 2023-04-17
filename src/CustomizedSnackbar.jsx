@@ -55,7 +55,7 @@ export default function CustomizedSnackbar() {
       })
       .catch((e) => console.error(e.message))
   }
-  console.log(popUpInfo)
+  // console.log(popUpInfo)
 
   useEffect(() => {
     if (popUpInfo) {
@@ -71,10 +71,11 @@ export default function CustomizedSnackbar() {
 
   if (randomProduct?.image) {
     img = randomProduct?.image
-    textColor = randomProduct?.textColor
-    bgColor = randomProduct?.bgColor
+    textColor = popUpInfo?.textColor
+    bgColor = popUpInfo?.bgColor
   }
 
+  // console.log(textColor, bgColor)
   return (
     <>
       {img && (
@@ -82,27 +83,31 @@ export default function CustomizedSnackbar() {
           <Snackbar open={open}>
             <Box
               display={'flex'}
-              bgcolor={popUpInfo?.bgColor}
-              alignItems={'center'}
-              justifyContent={'center'}
-              gap={4}
-              paddingX={2}
-              height={150}
-              width={300}
+              bgcolor={bgColor}
+              justifyContent={'flex-start'}
+              gap={2}
+              padding={2}
+              // height={150}
+              width={370}
               borderRadius={2}>
-              <Box>
-                {img && <img width={80} height={80} src={img} alt='img' />}
+              <Box height={100}>
+                {img && <img width={130} height={100} src={img} alt='img' />}
               </Box>
               <Box>
-                <Typography
-                  color={popUpInfo?.textColor}
-                  fontSize={25}
-                  fontWeight={'bold'}>
-                  {randomProduct?.title}
+                <Typography noWrap color={textColor} fontSize={25}>
+                  {`${randomProduct?.title.toUpperCase()}`}
                 </Typography>
-                <Typography color={popUpInfo?.textColor} fontSize={'15px'}>
-                  ${randomProduct?.price}
+                <Typography color={textColor} fontSize={20}>
+                  Price: ${randomProduct?.price}
                 </Typography>
+                <Box
+                  bgcolor={'white'}
+                  my={1}
+                  borderRadius={1}
+                  padding={'.1rem'}
+                  width={150}>
+                  <Typography>Ordered Just Now</Typography>
+                </Box>
               </Box>
             </Box>
           </Snackbar>
