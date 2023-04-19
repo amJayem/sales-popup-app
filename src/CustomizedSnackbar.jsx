@@ -89,9 +89,9 @@ export default function CustomizedSnackbar() {
               height={200}
               width={570}
               borderRadius={2}
-              mb={7}>
+              mb={8}>
               <Box height={250}>
-                {img && <img width={200} height={200} src={img} alt='img' />}
+                {img && <img width={200} height={170} src={img} alt='img' />}
               </Box>
               <Stack spacing={2}>
                 <Typography noWrap color={textColor} fontSize={35}>
@@ -104,7 +104,7 @@ export default function CustomizedSnackbar() {
                   bgcolor={'white'}
                   my={1}
                   borderRadius={1}
-                  padding={1}
+                  padding={'.1rem'}
                   width={170}>
                   <Typography fontSize={20}>Ordered Just Now</Typography>
                 </Box>
@@ -114,7 +114,7 @@ export default function CustomizedSnackbar() {
                   cursor: 'pointer'
                 }}>
                 <Typography
-                  ml={5}
+                  ml={3}
                   onClick={() => handleClose()}
                   color={'orange'}
                   fontSize={25}>
