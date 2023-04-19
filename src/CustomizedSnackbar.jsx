@@ -24,8 +24,8 @@ export default function CustomizedSnackbar() {
       handleOpen()
       setTimeout(() => {
         handleClose()
-      }, 2000)
-    }, 5000)
+      }, 5000)
+    }, 10000)
 
     return () => clearInterval(interval)
   }, [])
@@ -84,16 +84,16 @@ export default function CustomizedSnackbar() {
             <Box
               display={'flex'}
               bgcolor={bgColor}
-              justifyContent={'flex-start'}
               gap={2}
               padding={2}
               height={200}
               width={570}
-              borderRadius={2}>
+              borderRadius={2}
+              mb={7}>
               <Box height={250}>
-                {img && <img width={200} height={170} src={img} alt='img' />}
+                {img && <img width={200} height={200} src={img} alt='img' />}
               </Box>
-              <Box>
+              <Stack spacing={2}>
                 <Typography noWrap color={textColor} fontSize={35}>
                   {`${randomProduct?.title.toUpperCase()}`}
                 </Typography>
@@ -104,10 +104,22 @@ export default function CustomizedSnackbar() {
                   bgcolor={'white'}
                   my={1}
                   borderRadius={1}
-                  padding={'.1rem'}
+                  padding={1}
                   width={170}>
                   <Typography fontSize={20}>Ordered Just Now</Typography>
                 </Box>
+              </Stack>
+              <Box
+                sx={{
+                  cursor: 'pointer'
+                }}>
+                <Typography
+                  ml={5}
+                  onClick={() => handleClose()}
+                  color={'orange'}
+                  fontSize={25}>
+                  ✕
+                </Typography>
               </Box>
             </Box>
           </Snackbar>
