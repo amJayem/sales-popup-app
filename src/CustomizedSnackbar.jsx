@@ -87,17 +87,17 @@ export default function CustomizedSnackbar() {
               justifyContent={'flex-start'}
               gap={2}
               padding={2}
-              // height={150}
-              width={370}
+              height={200}
+              width={570}
               borderRadius={2}>
-              <Box height={100}>
-                {img && <img width={130} height={100} src={img} alt='img' />}
+              <Box height={250}>
+                {img && <img width={200} height={170} src={img} alt='img' />}
               </Box>
               <Box>
-                <Typography noWrap color={textColor} fontSize={25}>
+                <Typography noWrap color={textColor} fontSize={35}>
                   {`${randomProduct?.title.toUpperCase()}`}
                 </Typography>
-                <Typography color={textColor} fontSize={20}>
+                <Typography color={textColor} fontSize={25}>
                   Price: ${randomProduct?.price}
                 </Typography>
                 <Box
@@ -105,8 +105,8 @@ export default function CustomizedSnackbar() {
                   my={1}
                   borderRadius={1}
                   padding={'.1rem'}
-                  width={150}>
-                  <Typography>Ordered Just Now</Typography>
+                  width={170}>
+                  <Typography fontSize={20}>Ordered Just Now</Typography>
                 </Box>
               </Box>
             </Box>
